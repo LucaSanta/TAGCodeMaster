@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -17,50 +18,18 @@ class ArticleController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('article/index.html.twig', [
-            'slug' => $request->get('slug')
-        ]);
-    }
+        $format  = $request->get('_format');
+        $data = [
+            'locale' => $request->get('_locale'),
+            'year'   => $request->get('year'),
+            'title'  => $request->get('title'),
+            'format' => $format
+        ];
 
-    /**
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function defaultAction(Request $request)
-    {
-        return $this->render('article/index.html.twig', [
-            'slug' => $request->get('slug')
-        ]);
-    }
-
-    /**
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function pageAction(Request $request)
-    {
-        return $this->render('article/page.html.twig', [
-            'page' => $request->get('page')
-        ]);
-    }
-
-    /**
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function languageAction(Request $request)
-    {
-        return $this->render('article/language.html.twig', [
-            '_locale' => $request->get('_locale')
-        ]);
-    }
-
-    /**
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function mobileAction(Request $request)
-    {
-        return $this->render('article/mobile.html.twig', []);
+        if($format == "json") {
+            return new JsonResponse($data);
+        } else {
+            return $this->render('article/index.html.twig', $data);
+        }
     }
 }

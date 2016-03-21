@@ -2,6 +2,38 @@ _homepage:
     path: /
     defaults:  { _controller: AppBundle:Default:index }
 
+_mobile_article:
+    path: /article-default/{slug}
+    host:     m.symfony_tag.dev
+    defaults:  { _controller: AppBundle:Article:mobile, slug: "my-default-slug" }
+
 _article:
     path: /article/{slug}
     defaults:  { _controller: AppBundle:Article:index }
+
+_article_default:
+    path: /article-default/{slug}
+    defaults:  { _controller: AppBundle:Article:default, slug: "my-default-slug" }
+
+_article_page:
+    path:      /article-page/{page}
+    defaults:  { _controller: AppBundle:Article:page, page: 1 }
+    requirements:
+        page:  \d+
+
+_article_language:
+    path:      /article-language/{_locale}
+    defaults:  { _controller: AppBundle:Article:language, _locale: en }
+    requirements:
+        _locale:  en|fr|it
+
+_register:
+    path:     /register
+    defaults: { _controller: AppBundle:Register:index }
+    methods:  [GET, POST]
+
+_register_condition:
+    path:     /register-condition
+    defaults: { _controller: AppBundle:Register:condition }
+    condition: "context.getMethod() in ['GET'] and request.headers.get('User-Agent') matches '/firefox/i'"
+

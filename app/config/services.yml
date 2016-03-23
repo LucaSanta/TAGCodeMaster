@@ -9,3 +9,7 @@ services:
         tags:
             - { name: twig.extension }
 
+    twig.extension.sum:
+        class: AppBundle\Twig\SumExtension
+        tags:
+            - { name: twig.extension }

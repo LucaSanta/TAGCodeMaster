@@ -17,22 +17,6 @@ class TwigController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $users = [
-            [
-                'name' => 'Mario',
-                'surname' => 'Rossi'
-            ],
-            [
-                'name' => 'Andrea',
-                'surname' => 'Bianchi'
-            ],
-            [
-                'name' => 'Valentino',
-                'surname' => 'Rossi'
-            ]
-        ];
-        return $this->render('twig/index.html.twig', [
-            'users' => $users
-        ]);
+        return $this->render('twig/index.html.twig', []);
     }
 }

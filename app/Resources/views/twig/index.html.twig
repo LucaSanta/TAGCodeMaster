@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
-{% import ':twig:macro.html.twig' as macro %}
 
 {% block body %}
     <div id="wrapper">
         <div id="container">
             <div id="welcome">
                 <h1>Welcome to Symfony</h1>
-                {{ macro.btn_beautiful("http://www.symfony.com", "Vai su Symfony") }}
+                {{ articleDate|time_diff }}
             </div>
         </div>
     </div>

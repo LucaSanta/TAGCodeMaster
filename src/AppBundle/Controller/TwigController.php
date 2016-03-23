@@ -17,6 +17,8 @@ class TwigController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('twig/index.html.twig', []);
+        return $this->render('twig/index.html.twig', [
+            'articleDate' => new \DateTime('2016/03/22')
+        ]);
     }
 }

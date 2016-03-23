@@ -17,12 +17,22 @@ class TwigController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $titleWithHtml = "<b>Titolo con html</b>";
-        return $this->render('twig/index.html.twig', [
-            'user' => [
-                'name' => 'Mario Rossi'
+        $users = [
+            [
+                'name' => 'Mario',
+                'surname' => 'Rossi'
             ],
-            'title' => $titleWithHtml
+            [
+                'name' => 'Andrea',
+                'surname' => 'Bianchi'
+            ],
+            [
+                'name' => 'Valentino',
+                'surname' => 'Rossi'
+            ]
+        ];
+        return $this->render('twig/index.html.twig', [
+            'users' => $users
         ]);
     }
 }

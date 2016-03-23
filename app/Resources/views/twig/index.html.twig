@@ -1,65 +1,15 @@
-{# creiamo una nuova variabile name#}
-{% set name = "Mario" %}
-
-{# stampiamo name #}
-{{ name }}
-
 <div>
-    {# stampiamo un elemento preso da un array #}
-    {{ user.name }}
+    {# tramite l'if verifichiamo che l'array users abbia almeno un valore e tramite il ciclo for stampiamo i valori
+    presente nell'array #}
+    {% if users|length > 0 %}
+        <ul>
+            {% for user in users %}
+                <li>
+                {{ user.name }} {{ user.surname }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nessun utente</p>
+    {% endif %}
 </div>
-
-<div>
-    {# stampiamo informazioni sul template corrente #}
-    {{ dump(_self) }}
-</div>
-
-<div>
-    {# stampiamo informazioni sul contesto #}
-    {{ dump(_context) }}
-</div>
-
-<div>
-    {# stampiamo il chartset #}
-    {{ _charset}}
-</div>
-
-<div>
-    {# vale solo in un progetto Symfony #}
-    {{ dump(app) }}
-</div>
-
-<div>
-    {# filtro che rimuove tag html #}
-    {{ title|striptags }}
-</div>
-
-<div>
-    {# filtro che trasforma il testo in minuscolo #}
-    {{ 'WELCOME'|lower }}
-</div>
-
-<div>
-    {# creiamo una array#}
-    {% set items = { 'apple': 'fruit', 'orange': 'fruit', 'peugeot': 'unknown' } %}
-
-    {# filtro che aggiunge array ad un array #}
-    {% set items = items|merge({ 'peugeot': 'car', 'renault': 'car' }) %}
-
-    {{ dump(items) }}
-</div>
-
-<div>
-    {# filtro che trasforma il testo in maiscolo #}
-    {% filter upper %}
-        questo testo diventerà tutto maiuscolo
-    {% endfilter %}
-</div>
-
-<div>
-    {# function range utilizzato per stampare tutti i numeri tra 1 e 10 #}
-    {% for i in range(1, 10) %}
-        {{ i }},
-    {% endfor %}
-</div>
-

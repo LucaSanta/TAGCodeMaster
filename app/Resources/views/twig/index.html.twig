@@ -1,18 +1,15 @@
 {% extends 'base.html.twig' %}
+{% import ':twig:macro.html.twig' as macro %}
 
 {% block body %}
     <div id="wrapper">
         <div id="container">
             <div id="welcome">
                 <h1>Welcome to Symfony</h1>
+                {{ macro.btn_beautiful("http://www.symfony.com", "Vai su Symfony") }}
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block footer %}
-    <h3>my pre footer</h3>
-    {{ parent() }}
 {% endblock %}
 
 {% block stylesheets %}

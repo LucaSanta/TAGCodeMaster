@@ -10,6 +10,11 @@
     </div>
 {% endblock %}
 
+{% block footer %}
+    <h3>my pre footer</h3>
+    {{ parent() }}
+{% endblock %}
+
 {% block stylesheets %}
     <style>
         body { background: #F5F5F5; font: 18px/1.5 sans-serif; }
@@ -35,3 +40,4 @@
         }
     </style>
 {% endblock %}
+

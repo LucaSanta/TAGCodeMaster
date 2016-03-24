@@ -3,9 +3,7 @@
 {{ form_errors(form) }}
 
 <div>
-    <div>ID: {{ form.title.vars.id }}</div>
-    <div>Name: {{ form.title.vars.full_name }}</div>
-    {{ form_label(form.title, 'My Custom Label Title') }}
+    {{ form_label(form.title) }}
     {{ form_errors(form.title) }}
     {{ form_widget(form.title) }}
 </div>

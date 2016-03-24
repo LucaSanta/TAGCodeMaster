@@ -27,6 +27,8 @@ class Article
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=false)
      * @Assert\NotBlank()
+     * @Assert\Length(min=5, groups={"add_article"})
+     * @Assert\Length(min=10, groups={"edit_article"})
      */
     private $title;
 

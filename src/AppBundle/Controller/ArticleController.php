@@ -22,7 +22,12 @@ class ArticleController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('article/index.html.twig', []);
+        $em = $this->getDoctrine()->getManager();
+        $articles = $em->getRepository('AppBundle:Article')->findAll();
+
+        return $this->render('article/index.html.twig', [
+            'articles' => $articles
+        ]);
     }
 
     /**
@@ -33,7 +38,12 @@ class ArticleController extends Controller
     {
         // replace this example code with whatever you need
         $article = new Article();
-        $form = $this->createForm(ArticleType::class, $article);
+        $form = $this->createForm(ArticleType::class, $article, [
+            'validation_groups' => [
+                'Default',
+                'add_article'
+            ]
+        ]);
 
         $form->handleRequest($request);
 
@@ -49,6 +59,42 @@ class ArticleController extends Controller
 
         return $this->render('article/add.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository('AppBundle:Article')->find($request->get('id'));
+
+        if(!$article) {
+            throw $this->createNotFoundException('The article does not exist');
+        }
+
+        $form = $this->createForm(ArticleType::class, $article, [
+            'validation_groups' => [
+                'Default',
+                'edit_article'
+            ]
+        ]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $em->persist($article);
+            $em->flush();
+
+            return $this->redirectToRoute('_article');
+        }
+
+        return $this->render('article/edit.html.twig', [
+            'form'    => $form->createView(),
+            'article' => $article
         ]);
     }
 }

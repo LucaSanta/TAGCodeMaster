@@ -10,3 +10,8 @@ _article_add:
     path: /add-article
     defaults:  { _controller: AppBundle:Article:add }
 
+_article_edit:
+    path: /edit-article/{id}
+    defaults:  { _controller: AppBundle:Article:edit }
+    requirements:
+        page:  \d+

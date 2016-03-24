@@ -1,3 +1,12 @@
 _homepage:
     path: /
     defaults:  { _controller: AppBundle:Default:index }
+
+_article:
+    path: /article
+    defaults:  { _controller: AppBundle:Article:index }
+
+_article_add:
+    path: /add-article
+    defaults:  { _controller: AppBundle:Article:add }
+

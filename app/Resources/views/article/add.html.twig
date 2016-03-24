@@ -1,4 +1,7 @@
 <h1>Add Article</h1>
 {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-{{ form_widget(form) }}
+    {{ form_errors(form) }}
+
+    {{ form_row(form.title) }}
+    {{ form_row(form.description) }}
 {{ form_end(form) }}

@@ -49,10 +49,12 @@ class ArticleController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $em = $this->getDoctrine()->getManager();
-            $article->setCreated(new \DateTime());
-            $em->persist($article);
-            $em->flush();
+            if($form->get('saveArticle')->getData()) {
+                $em = $this->getDoctrine()->getManager();
+                $article->setCreated(new \DateTime());
+                $em->persist($article);
+                $em->flush();
+            }
 
             return $this->redirectToRoute('_article');
         }
@@ -86,8 +88,10 @@ class ArticleController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $em->persist($article);
-            $em->flush();
+            if($form->get('saveArticle')->getData()) {
+                $em->persist($article);
+                $em->flush();
+            }
 
             return $this->redirectToRoute('_article');
         }

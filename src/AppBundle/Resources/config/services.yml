@@ -1,0 +1,11 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+    app.dependency.one: dependencyOne
+    app.dependency.two: dependencyTwo
+
+services:
+    calculate:
+        class: AppBundle\Calculate\Calculate
+        arguments: ['%app.dependency.one%', '%app.dependency.two%']

@@ -5,6 +5,7 @@
         <div id="container">
             <div id="welcome">
                 <h1><span>{{ 'Benvenuto'|trans }} to</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }}</h1>
+                <p>{% trans %}Ciao %name%{% endtrans %}</p>
             </div>
 
             <div id="status">

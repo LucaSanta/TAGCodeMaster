@@ -17,10 +17,16 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
+        $name = 'Mario Rossi';
         $translated = $this->get('translator')->trans('Benvenuto');
+        $translatedPlaceholder = $this->get('translator')->trans(
+            'Ciao %name%',
+            ['%name%' => $name]
+        );
 
         return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
+            'name'     => $name,
+            'base_dir' => realpath($this->getParameter('kernel.root_dir') . '/..'),
         ]);
     }
 }

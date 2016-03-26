@@ -12,4 +12,6 @@ services:
 
     app.user_maneger:
         class: AppBundle\User\UserManager
-        arguments: ["@doctrine.orm.entity_manager", "@?mailer"]
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@?mailer"

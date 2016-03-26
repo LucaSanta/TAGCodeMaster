@@ -8,6 +8,19 @@ namespace AppBundle\Calculate;
  */
 class Calculate
 {
+    private $dependencyOne;
+
+    private $dependencyTwo;
+
+    /**
+     * Calculate constructor.
+     */
+    public function __construct($dependencyOne, $dependencyTwo)
+    {
+        $this->dependencyOne = $dependencyOne;
+        $this->dependencyTwo = $dependencyTwo;
+    }
+
     /**
      * @param $x
      * @param $y

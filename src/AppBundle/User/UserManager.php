@@ -17,11 +17,19 @@ class UserManager
     private $em;
 
     /**
-     * Calculate constructor.
+     * @param EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function setEntityManger(EntityManager $em)
     {
         $this->em = $em;
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public function getEntityManger()
+    {
+        return $this->em;
     }
 
     /**
@@ -31,10 +39,11 @@ class UserManager
      */
     public function create(User $user)
     {
+        $em = $this->getEntityManger();
         // my logic service ...
         $user->setFullname('Mario Rossi');
         $user->setEmail('m.rossi@example.com');
-        $this->em->persist($user);
-        $this->em->flush();
+        $em->persist($user);
+        $em->flush();
     }
 }

@@ -12,4 +12,5 @@ services:
 
     app.user_maneger:
         class: AppBundle\User\UserManager
-        arguments: ["@doctrine.orm.entity_manager"]
+        calls:
+            - [setEntityManger, ['@doctrine.orm.entity_manager']]

@@ -15,3 +15,6 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@?mailer"
+
+    app.user:
+        alias: app.user_maneger

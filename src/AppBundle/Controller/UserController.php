@@ -19,7 +19,7 @@ class UserController extends Controller
     public function indexAction(Request $request)
     {
         $user = new User();
-        $this->get('app.user_maneger')->create($user);
+        $this->get('app.user')->create($user);
 
         return $this->render('user/index.html.twig', []);
     }

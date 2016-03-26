@@ -5,3 +5,7 @@ _homepage:
 _calculate:
     path: /calculate
     defaults:  { _controller: AppBundle:Calculate:index }
+
+_user_create:
+    path: /crete-user
+    defaults:  { _controller: AppBundle:User:index }

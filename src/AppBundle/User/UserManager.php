@@ -3,6 +3,7 @@
 namespace AppBundle\User;
 
 use AppBundle\Entity\User;
+use AppBundle\Mail\MailManager;
 use Doctrine\ORM\EntityManager;
 
 /**
@@ -16,21 +17,21 @@ class UserManager
      */
     private $em;
 
-    /**
-     * @param EntityManager $em
-     */
-    public function setEntityManger(EntityManager $em)
-    {
-        $this->em = $em;
-    }
+    /** @var  \Swift_Mailer */
+    private $mail;
 
     /**
-     * @return EntityManager
+     * Calculate constructor.
      */
-    public function getEntityManger()
+    public function __construct(EntityManager $em, \Swift_Mailer $mail = null)
     {
-        return $this->em;
+        $this->em = $em;
+
+        if(!is_null($mail)) {
+            $this->mail = $mail;
+        }
     }
+
 
     /**
      * @param $x
@@ -39,11 +40,10 @@ class UserManager
      */
     public function create(User $user)
     {
-        $em = $this->getEntityManger();
         // my logic service ...
         $user->setFullname('Mario Rossi');
         $user->setEmail('m.rossi@example.com');
-        $em->persist($user);
-        $em->flush();
+        $this->em->persist($user);
+        $this->em->flush();
     }
 }

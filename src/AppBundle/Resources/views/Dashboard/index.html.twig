@@ -4,8 +4,18 @@
 
 {% block body %}
     <h1>Benvenuto {{ user.username }} nella tua Dashboard :)</h1>
-    {% if is_granted('ROLE_ADMIN') %}
-        <a href="#">Elimina utente</a>
-    {% endif %}
+
+    <h1>List Articles</h1>
+    <a href="{{ url('dashboard_add') }}">Aggiungi Articolo</a>
+
+    <ul>
+        {% for article in articles %}
+            <li>
+                {{ article.title}}
+                <a href="{{ url('dashboard_edit', {'id': article.id}) }}">Modifica</a>
+            </li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
 

@@ -2,7 +2,14 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Article;
+use AppBundle\Form\Type\ArticleType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Acl\Domain\ObjectIdentity;
+use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;
+use Symfony\Component\Security\Acl\Permission\MaskBuilder;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 /**
  * Class DashboardController
@@ -19,10 +26,94 @@ class DashboardController extends Controller
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
+        $em = $this->getDoctrine()->getManager();
+        $articles = $em->getRepository('AppBundle:Article')->findAll();
+
         return $this->render('AppBundle:Dashboard:index.html.twig', [
-                'user' => $user
+                'user' => $user,
+                'articles' => $articles
             ]
         );
     }
 
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function addAction(Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Impossibile accedere a questa pagina!');
+
+        $article = new Article();
+        $form = $this->createForm(ArticleType::class, $article, [
+            'validation_groups' => [
+                'Default',
+                'add_article'
+            ]
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $article->setCreated(new \DateTime());
+            $em->persist($article);
+            $em->flush();
+
+            // creating the ACL
+            $aclProvider = $this->get('security.acl.provider');
+            $objectIdentity = ObjectIdentity::fromDomainObject($article);
+            $acl = $aclProvider->createAcl($objectIdentity);
+
+            // retrieving the security identity of the currently logged-in user
+            $tokenStorage = $this->get('security.token_storage');
+            $user = $tokenStorage->getToken()->getUser();
+            $securityIdentity = UserSecurityIdentity::fromAccount($user);
+
+            // grant owner access
+            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
+            $aclProvider->updateAcl($acl);
+
+            return $this->redirectToRoute('dashboard');
+        }
+
+        return $this->render('AppBundle:Dashboard:add.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $article = $em->getRepository('AppBundle:Article')->find($request->get('id'));
+
+        $authorizationChecker = $this->get('security.authorization_checker');
+
+        // check for edit access
+        if (false === $authorizationChecker->isGranted('EDIT', $article)) {
+            throw new AccessDeniedException();
+        }
+
+        if(!$article) {
+            throw $this->createNotFoundException('The article does not exist');
+        }
+        $form = $this->createForm(ArticleType::class, $article, [
+            'validation_groups' => [
+                'Default',
+                'edit_article'
+            ]
+        ]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($article);
+            $em->flush();
+            return $this->redirectToRoute('dashboard');
+        }
+        return $this->render('AppBundle:Dashboard:edit.html.twig', [
+            'form'    => $form->createView(),
+            'article' => $article
+        ]);
+    }
 }

@@ -6,6 +6,14 @@ dashboard:
     path: dashboard
     defaults: { _controller: AppBundle:Dashboard:index }
 
+dashboard_add:
+    path: dashboard/add
+    defaults: { _controller: AppBundle:Dashboard:add }
+
+dashboard_edit:
+    path: dashboard/edit
+    defaults: { _controller: AppBundle:Dashboard:edit }
+
 login:
     path: login
     defaults: { _controller: AppBundle:Security:index }

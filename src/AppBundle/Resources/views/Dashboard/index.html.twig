@@ -1,1 +1,11 @@
-<h1>Benvenuto {{ user.username }} nella tua Dashboard :)</h1>
+{% extends "::base.html.twig" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    <h1>Benvenuto {{ user.username }} nella tua Dashboard :)</h1>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="#">Elimina utente</a>
+    {% endif %}
+{% endblock %}
+

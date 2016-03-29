@@ -52,25 +52,13 @@ class DashboardController extends Controller
             ]
         ]);
         $form->handleRequest($request);
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $article->setCreated(new \DateTime());
+            $article->setUser($user);
             $em->persist($article);
             $em->flush();
-
-            // creating the ACL
-            $aclProvider = $this->get('security.acl.provider');
-            $objectIdentity = ObjectIdentity::fromDomainObject($article);
-            $acl = $aclProvider->createAcl($objectIdentity);
-
-            // retrieving the security identity of the currently logged-in user
-            $tokenStorage = $this->get('security.token_storage');
-            $user = $tokenStorage->getToken()->getUser();
-            $securityIdentity = UserSecurityIdentity::fromAccount($user);
-
-            // grant owner access
-            $acl->insertObjectAce($securityIdentity, MaskBuilder::MASK_OWNER);
-            $aclProvider->updateAcl($acl);
 
             return $this->redirectToRoute('dashboard');
         }
@@ -89,12 +77,7 @@ class DashboardController extends Controller
         $em = $this->getDoctrine()->getManager();
         $article = $em->getRepository('AppBundle:Article')->find($request->get('id'));
 
-        $authorizationChecker = $this->get('security.authorization_checker');
-
-        // check for edit access
-        if (false === $authorizationChecker->isGranted('EDIT', $article)) {
-            throw new AccessDeniedException();
-        }
+        $this->denyAccessUnlessGranted(['edit'], $article, 'Impossibile accedere a questa risorsa!');
 
         if(!$article) {
             throw $this->createNotFoundException('The article does not exist');

@@ -30,6 +30,10 @@ class ArticleController extends Controller
             'status' => 1
         ]);
 
+        $articleByTile = $em->getRepository('AppBundle:Article')->findOneByTitle("titolo 1");
+
+        $articlesForThisMonth = $em->getRepository('AppBundle:Article')->getArticlesForThisMonth();
+
         return $this->render(':article:index.html.twig', []);
     }
 }

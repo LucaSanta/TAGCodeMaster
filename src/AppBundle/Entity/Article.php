@@ -43,6 +43,13 @@ class Article
     private $status;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime", nullable=false)
+     */
+    private $created;
+
+    /**
      * Get id
      *
      * @return int
@@ -114,6 +121,21 @@ class Article
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+    /**
+     * @param \DateTime $created
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
     }
 }
 

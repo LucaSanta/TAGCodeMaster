@@ -10,4 +10,19 @@ namespace AppBundle\Repository;
  */
 class ArticleRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @return array
+     */
+    public function getArticlesForThisMonth()
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.created >= :startMonth')
+            ->andWhere('a.created <= :endMonth')
+            ->setParameter('startMonth', (new \DateTime('first day of this month'))->format('Y-m-d 00:00:00'))
+            ->setParameter('endMonth', (new \DateTime('last day of this month'))->format('Y-m-d 23:59:59'))
+            ->orderBy('a.title', 'ASC')
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }

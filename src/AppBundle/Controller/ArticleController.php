@@ -34,6 +34,8 @@ class ArticleController extends Controller
 
         $articlesForThisMonth = $em->getRepository('AppBundle:Article')->getArticlesForThisMonth();
 
+        $articlesForThisMonthByDql = $em->getRepository('AppBundle:Article')->getArticlesForThisMonthByDQL();
+
         return $this->render(':article:index.html.twig', []);
     }
 }

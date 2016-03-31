@@ -25,4 +25,22 @@ class ArticleRepository extends \Doctrine\ORM\EntityRepository
 
         return $query->getResult();
     }
+
+    /**
+     * @return array
+     */
+    public function getArticlesForThisMonthByDQL()
+    {
+        $query = $this->getEntityManager()->createQuery(
+            'SELECT a ' .
+            'FROM AppBundle\Entity\Article a ' .
+            'WHERE a.created >= :startMonth AND a.created <= :endMonth '.
+            'ORDER BY a.title ASC'
+        )->setParameters([
+            'startMonth' => (new \DateTime('first day of this month'))->format('Y-m-d 00:00:00'),
+            'endMonth'   => (new \DateTime('last day of this month'))->format('Y-m-d 23:59:59')
+        ]);
+
+        return $query->getResult();
+    }
 }

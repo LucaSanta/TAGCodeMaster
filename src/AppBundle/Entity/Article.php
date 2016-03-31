@@ -35,6 +35,12 @@ class Article
      */
     private $description;
 
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="status", type="boolean")
+     */
+    private $status;
 
     /**
      * Get id
@@ -92,6 +98,22 @@ class Article
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param boolean $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
 }
 

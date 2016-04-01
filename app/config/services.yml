@@ -4,8 +4,14 @@ parameters:
 #    parameter_name: value
 
 services:
-    app.new_article_listener:
-        class: AppBundle\EventListner\NewArticle
+#    app.new_article_listener:
+#        class: AppBundle\EventListner\NewArticle
+#        arguments: ["@mailer"]
+#        tags:
+#            - { name: kernel.event_listener, event: article.new }
+
+    app.new_article_listener_subscriber:
+        class: AppBundle\EventListner\NewArticleSubscriber
         arguments: ["@mailer"]
         tags:
-            - { name: kernel.event_listener, event: article.new }
+            - { name: kernel.event_subscriber, event: article.new }

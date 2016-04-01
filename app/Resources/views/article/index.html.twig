@@ -1,8 +1,12 @@
-<h1>List Articles</h1>
-<a href="{{ url('_article_add') }}">Aggiungi Articolo</a>
+{% extends 'base.html.twig' %}
 
-<ul>
-    {% for article in articles %}
-        <li>{{ article.title}} <a href="{{ url('_article_edit', {'id': article.id}) }}">Modifica</a></li>
-    {% endfor %}
-</ul>
+{% block body %}
+    <h1>List Articles</h1>
+    <a href="{{ url('_article_add') }}">Aggiungi Articolo</a>
+
+    <ul>
+        {% for article in articles %}
+            <li>{{ article.title}} <a href="{{ url('_article_edit', {'id': article.id}) }}">Modifica</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

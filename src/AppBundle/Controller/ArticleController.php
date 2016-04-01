@@ -3,8 +3,11 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Article;
+use AppBundle\Event\BlogArticleEvent;
+use AppBundle\EventListner\NewArticle;
 use AppBundle\Form\Type\ArticleType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -54,6 +57,9 @@ class ArticleController extends Controller
                 $article->setCreated(new \DateTime());
                 $em->persist($article);
                 $em->flush();
+
+                $event = new BlogArticleEvent($article);
+                $this->get('event_dispatcher')->dispatch(BlogArticleEvent::NAME, $event);
             }
 
             return $this->redirectToRoute('_article');

@@ -1,0 +1,43 @@
+{% extends 'AdminBundle::layout.html.twig' %}
+{% import 'AdminBundle::macros.html.twig' as macro %}
+{% block body %}
+
+    <div class="container theme-showcase" role="main">
+
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <h1>Admin Page</h1>
+            <p>This is a template showcasing the optional theme stylesheet included in Bootstrap. Use it as a starting point to create something more unique by building on or modifying it.</p>
+        </div>
+
+
+        <div class="page-header">
+            <h1>Buttons</h1>
+        </div>
+        <p>
+            {{ macro.button('btn-lg', 'btn-default', 'Default') }}
+            {{ macro.button('btn-lg', 'btn-success', 'Success') }}
+            {{ macro.button('btn-lg', 'btn-info', 'Info') }}
+            {{ macro.button('btn-lg', 'btn-warning', 'Warning') }}
+            {{ macro.button('btn-lg', 'btn-danger', 'Danger') }}
+            {{ macro.button('btn-lg', 'btn-link', 'Link') }}
+        </p>
+        <p>
+            {{ macro.button('btn-sm', 'btn-default', 'Default') }}
+            {{ macro.button('btn-sm', 'btn-success', 'Success') }}
+            {{ macro.button('btn-sm', 'btn-info', 'Info') }}
+            {{ macro.button('btn-sm', 'btn-warning', 'Warning') }}
+            {{ macro.button('btn-sm', 'btn-danger', 'Danger') }}
+            {{ macro.button('btn-sm', 'btn-link', 'Link') }}
+        </p>
+        <p>
+            {{ macro.button('btn-xs', 'btn-default', 'Default') }}
+            {{ macro.button('btn-xs', 'btn-success', 'Success') }}
+            {{ macro.button('btn-xs', 'btn-info', 'Info') }}
+            {{ macro.button('btn-xs', 'btn-warning', 'Warning') }}
+            {{ macro.button('btn-xs', 'btn-danger', 'Danger') }}
+            {{ macro.button('btn-xs', 'btn-link', 'Link') }}
+        </p>
+
+    </div> <!-- /container -->
+{% endblock %}
